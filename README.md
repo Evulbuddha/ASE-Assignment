@@ -12,3 +12,5 @@ some more stuff i added while trying to merge back into the master branch
 I have put some things here as well
 
 Me too!! -Jo
+
+i made changes to this on ewen
