@@ -38,6 +38,8 @@ public class MainActivity extends Activity {
             // the location services, then when the user clicks the "OK" button,
             // call enableLocationSettings()
         	enableLocationSettings();
+        	
+        	
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, gpsUpdateListener);
     }
@@ -47,7 +49,7 @@ public class MainActivity extends Activity {
             // A new location update is received.  Do something useful with it.  Update the UI with
             // the location update.
             //updateUILocation(location);
-    		gpsText.setText(location.getLatitude() + "'" + location.getLongitude());
+    		gpsText.setText("Latitude:"+location.getLatitude() + "\nLongitude:" + location.getLongitude());
         }
 
         public void onProviderDisabled(String provider) {
