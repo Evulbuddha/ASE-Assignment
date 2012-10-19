@@ -38,8 +38,6 @@ public class MainActivity extends Activity {
             // the location services, then when the user clicks the "OK" button,
             // call enableLocationSettings()
         	enableLocationSettings();
-        	
-        	
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, gpsUpdateListener);
     }
