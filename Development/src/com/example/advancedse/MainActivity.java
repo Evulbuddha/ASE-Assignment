@@ -22,8 +22,8 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	public final static String EXTRA_MESSAGE = "com.example.advancedSE.MESSAGE";
-	LocationManager locationManager;
-	TextView gpsText;
+	private LocationManager locationManager;
+	private TextView gpsText;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,16 +69,5 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
-    }
-    
-    public void speakToMe(View view){
-    	Date d = new Date();
-    	CharSequence s  = DateFormat.format("hh:mm:ss", d.getTime());
-    	//TextView tv = (TextView) findViewById(R.id.textView1);
-    	//tv.setText(s);
-    	
-    	/*Intent intent = new Intent(this, DisplayMessageActivity.class);
-    	intent.putExtra(EXTRA_MESSAGE, "I am really talking like a real boy.");
-    	startActivity(intent);*/
     }
 }
