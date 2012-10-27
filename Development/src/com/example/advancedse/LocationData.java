@@ -1,13 +1,17 @@
 package com.example.advancedse;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import android.location.Location;
+
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
+import com.amazonaws.services.simpledb.AmazonSimpleDBClient;
 import com.amazonaws.services.simpledb.model.CreateDomainRequest;
 import com.amazonaws.services.simpledb.model.PutAttributesRequest;
 import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
@@ -18,13 +22,16 @@ public class LocationData {
 	private Date timestamp;
 	private String uuid;
 	
+	private Location builtFrom;
+	
 	private static String domian;
 	private static Properties properties;
 	private static AmazonSimpleDB sdb;
 	
 	private static AmazonSimpleDB getDB(){
 		if (sdb == null){
-			BasicAWSCredentials creds = new BasicAWSCredentials(getProperty("accessKey"), getProperty("secretKey"));
+			BasicAWSCredentials creds = new BasicAWSCredentials("AKIAIHPTF54IFNDMMBIA", "TRbcsPtlHf31W8EF7IqrsByu7MahneSAz724GWd9");//getProperty("accessKey"), getProperty("secretKey"));
+			sdb = new AmazonSimpleDBClient(creds);
 		}
 		return sdb;
 	}
@@ -33,21 +40,23 @@ public class LocationData {
 		if(properties == null){
 			properties = new Properties();
 			try {
-				properties.load(LocationData.class.getResourceAsStream("AwsCredentials.properties"));
+				properties.load(LocationData.class.getResourceAsStream("/com.example.advancedse.MainActivity/AwsCredentials.properties"));
 			} catch (IOException e) {e.printStackTrace();}
 		}
 		return properties.getProperty(propName);
 	}
 	
-	public void save(){//String uuid, double lon, double lat, Date time){
-		LocationData.getDB().createDomain(new CreateDomainRequest(LocationData.getProperty("domain")));
+	public static void save(Location location, String uuid){//String uuid, double lon, double lat, Date time){
+		AmazonSimpleDB db = LocationData.getDB();
+		CreateDomainRequest cdr = new CreateDomainRequest(uuid);
+		db.createDomain(cdr);
+		String datestring = new Date().toString();
 		List<ReplaceableAttribute> attributes = new ArrayList<ReplaceableAttribute>();
-		attributes.add(new ReplaceableAttribute().withName("longitude").withValue(longitude+""));
-		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(latitude+""));
-		attributes.add(new ReplaceableAttribute().withName("timestamp").withValue(timestamp.toString()));
-		attributes.add(new ReplaceableAttribute().withName("uuid").withValue("FAKEUUID"));
+		attributes.add(new ReplaceableAttribute().withName("longitude").withValue(location.getLongitude()+""));
+		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(location.getLatitude()+""));
+		attributes.add(new ReplaceableAttribute().withName("timestamp").withValue(datestring));
 		
-		sdb.putAttributes(new PutAttributesRequest(LocationData.getProperty("domain"), uuid, attributes));
+		sdb.putAttributes(new PutAttributesRequest(uuid, datestring, attributes));
 	}
 
 	public double getLongitude() {
@@ -80,5 +89,13 @@ public class LocationData {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+	public Location getBuiltFrom() {
+		return builtFrom;
+	}
+
+	public void setBuiltFrom(Location builtFrom) {
+		this.builtFrom = builtFrom;
 	}
 }
