@@ -3,7 +3,7 @@
 	<name>TestAdvancedSE</name>
 	<comment></comment>
 	<projects>
-		<project>AdvancedSE</project>
+		<project>com.example.advancedse</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
