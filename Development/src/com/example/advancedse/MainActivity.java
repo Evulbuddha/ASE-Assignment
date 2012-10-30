@@ -1,13 +1,15 @@
 package com.example.advancedse;
 
 import java.text.SimpleDateFormat;
+
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+
 import java.util.Date;
 
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
-//import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,39 +20,69 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AnalogClock;
+import android.widget.Button;
 import android.widget.DigitalClock;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
-public class MainActivity extends Activity {
+public class MainActivity extends MapActivity {
 
 	public final static String EXTRA_MESSAGE = "com.example.advancedSE.MESSAGE";
 	private LocationManager locationManager;
 	private TextView gpsText;
 	//private DigitalClock digitalClock;
 	//private AnalogClock analogClock;
+	private ViewFlipper vf;
+	private MapView mapV;
+	private Map map;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+        vf = (ViewFlipper) findViewById(R.id.flipper);
         setupClocks();
         
         setupLocation();
+        
+        setupButtons();
+        mapV = (MapView) findViewById(R.id.mapView);
+		mapV.setBuiltInZoomControls(true);
+        map = new Map(mapV, this);
        
     }
     
-    private void setupLocation() {
+    private void setupButtons() {
+    	Button goMap = (Button) findViewById(R.id.goMapButton);
+    	goMap.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View view) {
+    		//vf.setInAnimation(inFromRightAnimation());
+    		//vf.setOutAnimation(outToLeftAnimation());
+    		vf.showNext();
+    		}});
+		mapV = (MapView) findViewById(R.id.mapView);
+		mapV.setBuiltInZoomControls(true);
+		
+		Button backButton = (Button) findViewById(R.id.backButton);
+		backButton.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View view) {
+    		//vf.setInAnimation(inFromRightAnimation());
+    		//vf.setOutAnimation(outToLeftAnimation());
+    		vf.showPrevious();
+    		}});
+
+	}
+
+	private void setupLocation() {
     	locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        //final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         //gpsText = (TextView) findViewById(R.id.gpsLoc);
-        if (!gpsEnabled) {
+        //if (!gpsEnabled) {
             // Build an alert dialog here that requests that the user enable
             // the location services, then when the user clicks the "OK" button,
             // call enableLocationSettings()
-        	enableLocationSettings();
-        }
+        	//enableLocationSettings();
+        //}
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, gpsUpdateListener);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, gpsUpdateListener);
         
@@ -106,6 +138,7 @@ public class MainActivity extends Activity {
         			}
     			}
     		}
+    		map.addOverlay(location);
     		//gpsText.setText("Latitude:"+ lastKnownLoc.getLatitude() + "\nLongitude:" + lastKnownLoc.getLongitude());
         }
 
@@ -139,4 +172,10 @@ public class MainActivity extends Activity {
             }
         }
     };
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
