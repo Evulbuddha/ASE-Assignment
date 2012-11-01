@@ -11,17 +11,14 @@ import android.location.Location;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
 import com.amazonaws.services.simpledb.AmazonSimpleDBClient;
+import com.amazonaws.services.simpledb.model.Attribute;
 import com.amazonaws.services.simpledb.model.CreateDomainRequest;
+import com.amazonaws.services.simpledb.model.GetAttributesRequest;
+import com.amazonaws.services.simpledb.model.GetAttributesResult;
 import com.amazonaws.services.simpledb.model.PutAttributesRequest;
 import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 
 public class LocationData {
-	private double longitude;
-	private double latitude;
-	private Date timestamp;
-	private String uuid;
-	
-	private Location builtFrom;
 	
 	private static String domian;
 	private static Properties properties;
@@ -53,48 +50,32 @@ public class LocationData {
 		List<ReplaceableAttribute> attributes = new ArrayList<ReplaceableAttribute>();
 		attributes.add(new ReplaceableAttribute().withName("longitude").withValue(location.getLongitude()+""));
 		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(location.getLatitude()+""));
+		attributes.add(new ReplaceableAttribute().withName("provider").withValue(location.getProvider() +""));
 		attributes.add(new ReplaceableAttribute().withName("timestamp").withValue(datestring));
 		
 		sdb.putAttributes(new PutAttributesRequest(uuid, datestring, attributes));
 	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public Location getBuiltFrom() {
-		return builtFrom;
-	}
-
-	public void setBuiltFrom(Location builtFrom) {
-		this.builtFrom = builtFrom;
+	
+	public static Location load(String uuid, Date timestamp){
+		AmazonSimpleDB db = LocationData.getDB();
+		String timestampAsString =timestamp.toString();
+		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest(uuid, timestampAsString));
+		List<Attribute> attributesList = ar.getAttributes();
+		double longitude = 0; double latitude = 0; String provider = null;
+		for(Attribute a :attributesList){
+			if(a.getName().equals("longitude")){
+				longitude = Float.parseFloat(a.getValue());
+			}else if(a.getName().equals("latitude")){
+				latitude = Float.parseFloat(a.getValue());
+			}else if(a.getName().equals("provider")){
+				provider = a.getValue();
+			}
+		}
+		Location loc = new Location(provider);
+		loc.setLongitude(longitude);
+		loc.setLatitude(latitude);
+		return loc;
 	}
 }
+
+	

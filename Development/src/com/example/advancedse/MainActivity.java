@@ -163,6 +163,11 @@ public class MainActivity extends MapActivity {
         return true;
     }
     
+    public String getUUID(){
+		return null;
+    	
+    }
+    
     private Handler logGPSLocation = new Handler () {
         public void handleMessage (Message msg) {
             if(lastKnownLoc != null){
