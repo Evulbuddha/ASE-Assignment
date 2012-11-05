@@ -28,7 +28,7 @@ public class Map {
 	}
 	
 	public void addOverlay(Location l){
-		GeoPoint point = new GeoPoint((int)(l.getLongitude() * 1E6),(int)(l.getLatitude() * 1E6));
+		GeoPoint point = new GeoPoint((int)(l.getLatitude() * 1E6),(int)(l.getLongitude() * 1E6));
 		OverlayItem overlayitem = new OverlayItem(point, "Hola, Mundo!", "I'm in Mexico City!");
 		itemizedoverlay.addOverlay(overlayitem);
 		mapOverlays.add(itemizedoverlay);
