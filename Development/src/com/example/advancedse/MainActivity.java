@@ -10,11 +10,12 @@ import java.util.Date;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.app.Activity;
+//import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
@@ -29,7 +30,7 @@ public class MainActivity extends MapActivity {
 
 	public final static String EXTRA_MESSAGE = "com.example.advancedSE.MESSAGE";
 	private LocationManager locationManager;
-	private TextView gpsText;
+	//private TextView gpsText;
 	//private DigitalClock digitalClock;
 	//private AnalogClock analogClock;
 	private ViewFlipper vf;
@@ -171,7 +172,8 @@ public class MainActivity extends MapActivity {
     private Handler logGPSLocation = new Handler () {
         public void handleMessage (Message msg) {
             if(lastKnownLoc != null){
-            	LocationData.save(lastKnownLoc, "uuid");
+            	///LocationData.save(lastKnownLoc, "uuid");
+            	new LogLocationTask().execute(lastKnownLoc);
             	TextView lastUpdated = (TextView)findViewById(R.id.lastUpdate);
             	lastUpdated.setText("Last synced to cloud:"+new SimpleDateFormat("dd-MM-yy HH:mm:ss").format(new Date()));
             }
@@ -182,5 +184,20 @@ public class MainActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	private class LogLocationTask extends AsyncTask<Location, Void, Void> {
+
+		protected Void doInBackground(Location... locations) {
+
+			LocationData.save(locations[0], "uuid");
+
+			return null;
+		}
+
+		protected void onPostExecute(Void result) {
+
+			//MainActivity.this.finish();
+		}
 	}
 }

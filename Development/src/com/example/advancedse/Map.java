@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.view.View;
+//import android.view.View;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -17,7 +17,7 @@ public class Map {
 	private List<Overlay> mapOverlays;
 	private LoggedLocationOverlays itemizedoverlay;
 	private MapController mapController;
-	private View zoomControlls;
+	//private View zoomControlls;
 	
 	public Map(MapView mapView, MainActivity activity){
 		this.mapController = mapView.getController();

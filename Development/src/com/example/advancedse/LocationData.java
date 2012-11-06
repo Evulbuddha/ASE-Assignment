@@ -20,7 +20,7 @@ import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 
 public class LocationData {
 	
-	private static String domian;
+//	private static String domian;
 	private static Properties properties;
 	private static AmazonSimpleDB sdb;
 	
