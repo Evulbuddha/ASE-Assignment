@@ -48,8 +48,10 @@ public class MainActivity extends MapActivity {
         
         setupButtons();
         mapV = (MapView) findViewById(R.id.mapView);
-		mapV.setBuiltInZoomControls(true);
+
         map = new Map(mapV, this);
+		mapV.setBuiltInZoomControls(true);
+		mapV.setClickable(true);
        
     }
     
