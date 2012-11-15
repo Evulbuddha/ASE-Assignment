@@ -12,9 +12,10 @@
 			    android:id="@+id/mapView"
 			    android:layout_width="fill_parent"
 			    android:layout_height="fill_parent"
-			    android:apiKey="0SQGCeBDcQoB-Ci2gKegwylOSOEZ3ZClklGZDiQ" />
+			    android:apiKey="0BsI21jMOBGeUhd1cZB9iPoFkMXPeltEBCTaGlw" />
+	<!--ChrisNetbook	android:apiKey="0SQGCeBDcQoB-Ci2gKegwylOSOEZ3ZClklGZDiQ" /> -->
 	<!--ChrisPC android:apiKey="0SQGCeBDcQoCJSsEEcltZ2by950tv8LEC8fLCJA" />  -->
-	<!--Ewen	android:apiKey="0BsI21jMOBGeUhd1cZB9iPoFkMXPeltEBCTaGlw" />  -->
+				  
 
 			<Button
 			    android:id="@+id/backButton"
