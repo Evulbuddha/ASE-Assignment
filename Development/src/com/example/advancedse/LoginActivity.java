@@ -30,12 +30,13 @@ public class LoginActivity extends Activity{
     			TextView password = (TextView) findViewById(R.id.passwordView);
     			LoginTask loginTask = new LoginTask();
     			loginTask.execute(email.getText().toString(), password.getText().toString());
-    			try {
-					loginTask.wait(10000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-				}//wait for login operation to complete
+    			synchronized(loginTask){
+	                try {
+						loginTask.wait();//wait for login opertion to complete
+					} catch (InterruptedException e) {
+						
+					}
+    	        }
     			if(authorised){
     				Intent i = new Intent(getApplicationContext(), MainActivity.class);
     				startActivity(i);
@@ -58,7 +59,9 @@ public class LoginActivity extends Activity{
 		@Override
 		protected Void doInBackground(String... params) {
 			authorised = LoginDB.login(params[0], params[1]);
-			notify();
+			synchronized(this){
+				notifyAll();
+			}
 			return null;
 		}
 
