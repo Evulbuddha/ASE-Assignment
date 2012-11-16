@@ -24,7 +24,6 @@ public class Map {
 		mapOverlays = mapView.getOverlays();
 		Drawable drawable = activity.getResources().getDrawable(R.drawable.location_mark);
 		itemizedoverlay = new LoggedLocationOverlays(drawable, activity);
-		//zoomControlls = mapController.
 	}
 	
 	public void addOverlay(Location l){

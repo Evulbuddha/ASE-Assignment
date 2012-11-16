@@ -1,0 +1,60 @@
+package com.example.advancedse;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+
+import android.location.Location;
+
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.simpledb.AmazonSimpleDB;
+import com.amazonaws.services.simpledb.AmazonSimpleDBClient;
+import com.amazonaws.services.simpledb.model.Attribute;
+import com.amazonaws.services.simpledb.model.CreateDomainRequest;
+import com.amazonaws.services.simpledb.model.GetAttributesRequest;
+import com.amazonaws.services.simpledb.model.GetAttributesResult;
+import com.amazonaws.services.simpledb.model.PutAttributesRequest;
+import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
+
+public class LoginDB {
+	
+//	private static String domian;
+	private static Properties properties;
+	private static AmazonSimpleDB sdb;
+	
+	private static AmazonSimpleDB getDB(){
+		if (sdb == null){
+			BasicAWSCredentials creds = new BasicAWSCredentials("AKIAIHPTF54IFNDMMBIA", "TRbcsPtlHf31W8EF7IqrsByu7MahneSAz724GWd9");//getProperty("accessKey"), getProperty("secretKey"));
+			sdb = new AmazonSimpleDBClient(creds);
+		}
+		return sdb;
+	}
+
+	private static String getProperty(String propName) {
+		if(properties == null){
+			properties = new Properties();
+			try {
+				properties.load(LoginDB.class.getResourceAsStream("/com.example.advancedse.MainActivity/AwsCredentials.properties"));
+			} catch (IOException e) {e.printStackTrace();}
+		}
+		return properties.getProperty(propName);
+	}
+	
+	public static boolean login(String email, String password){
+		AmazonSimpleDB db = LoginDB.getDB();
+		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest("users", email));
+		List<Attribute> attributesList = ar.getAttributes();
+		for(Attribute a :attributesList){
+			if(a.getName().equals("password")){
+				if(a.getValue().equals(password)){ //if the stored password == the input password
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+}
+
+	
