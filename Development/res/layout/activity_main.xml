@@ -5,11 +5,6 @@
     android:layout_height="fill_parent" >
 
     <include
-        android:id="@+id/first"
-        android:layout_height="451dp"
-        layout="@layout/clock_screen" />
-
-    <include
         android:id="@+id/second"
         layout="@layout/map_screen" />
 

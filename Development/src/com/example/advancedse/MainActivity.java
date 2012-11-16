@@ -40,9 +40,9 @@ public class MainActivity extends MapActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.map_screen);
         vf = (ViewFlipper) findViewById(R.id.flipper);
-        setupClocks();
+    
         
         setupLocation();
         
@@ -56,23 +56,16 @@ public class MainActivity extends MapActivity {
     }
     
     private void setupButtons() {
-    	Button goMap = (Button) findViewById(R.id.goMapButton);
-    	goMap.setOnClickListener(new View.OnClickListener() {
-    		public void onClick(View view) {
-    		//vf.setInAnimation(inFromRightAnimation());
-    		//vf.setOutAnimation(outToLeftAnimation());
-    		vf.showNext();
-    		}});
 		mapV = (MapView) findViewById(R.id.mapView);
 		mapV.setBuiltInZoomControls(true);
 		
 		Button backButton = (Button) findViewById(R.id.backButton);
-		backButton.setOnClickListener(new View.OnClickListener() {
-    		public void onClick(View view) {
-    		//vf.setInAnimation(inFromRightAnimation());
-    		//vf.setOutAnimation(outToLeftAnimation());
-    		vf.showPrevious();
-    		}});
+//		backButton.setOnClickListener(new View.OnClickListener() {
+//    		public void onClick(View view) {
+//    		//vf.setInAnimation(inFromRightAnimation());
+//    		//vf.setOutAnimation(outToLeftAnimation());
+//    		vf.showPrevious();
+//    		}});
 
 	}
 
@@ -103,28 +96,6 @@ public class MainActivity extends MapActivity {
             }
         };
         timer.start();
-		
-	}
-
-	private void setupClocks() {
-    	final DigitalClock digitalClock=(DigitalClock) findViewById(R.id.digitalClock1);
-        final AnalogClock analogClock=(AnalogClock) findViewById(R.id.analogClock1);
-        
-        digitalClock.setVisibility(View.INVISIBLE);
-        analogClock.setOnClickListener(new View.OnClickListener() {
-        	   @Override
-        	   public void onClick(View v){
-        		  analogClock.setVisibility(View.INVISIBLE);
-        	      digitalClock.setVisibility(View.VISIBLE);
-        	   }
-        	});
-        digitalClock.setOnClickListener(new View.OnClickListener() {
-     	   @Override
-     	   public void onClick(View v){
-     		  digitalClock.setVisibility(View.INVISIBLE);
-    	      analogClock.setVisibility(View.VISIBLE);
-     	   }
-     	});
 		
 	}
 
@@ -176,8 +147,8 @@ public class MainActivity extends MapActivity {
             if(lastKnownLoc != null){
             	///LocationData.save(lastKnownLoc, "uuid");
             	new LogLocationTask().execute(lastKnownLoc);
-            	TextView lastUpdated = (TextView)findViewById(R.id.lastUpdate);
-            	lastUpdated.setText("Last synced to cloud:"+new SimpleDateFormat("dd-MM-yy HH:mm:ss").format(new Date()));
+
+            	
             }
         }
     };
