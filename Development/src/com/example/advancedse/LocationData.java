@@ -42,11 +42,11 @@ public class LocationData {
 		return properties.getProperty(propName);
 	}
 	
-	public static void save(Location location, String uuid){//String uuid, double lon, double lat, Date time){
+	public static void save(Location location, String uuid, Date currentTime){//String uuid, double lon, double lat, Date time){
 		AmazonSimpleDB db = LocationData.getDB();
 		CreateDomainRequest cdr = new CreateDomainRequest(uuid);
 		db.createDomain(cdr);
-		String datestring = new Date().toString();
+		String datestring= currentTime.toString();
 		List<ReplaceableAttribute> attributes = new ArrayList<ReplaceableAttribute>();
 		attributes.add(new ReplaceableAttribute().withName("longitude").withValue(location.getLongitude()+""));
 		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(location.getLatitude()+""));
@@ -54,6 +54,10 @@ public class LocationData {
 		attributes.add(new ReplaceableAttribute().withName("timestamp").withValue(datestring));
 		
 		sdb.putAttributes(new PutAttributesRequest(uuid, datestring, attributes));
+	}
+	
+	public static void save(Location location, String uuid){
+		save(location, uuid, new Date());
 	}
 	
 	public static Location load(String uuid, Date timestamp){
