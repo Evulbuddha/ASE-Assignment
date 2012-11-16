@@ -60,12 +60,14 @@ public class MainActivity extends MapActivity {
 		mapV.setBuiltInZoomControls(true);
 		
 		Button backButton = (Button) findViewById(R.id.backButton);
-//		backButton.setOnClickListener(new View.OnClickListener() {
-//    		public void onClick(View view) {
-//    		//vf.setInAnimation(inFromRightAnimation());
-//    		//vf.setOutAnimation(outToLeftAnimation());
-//    		vf.showPrevious();
-//    		}});
+		backButton.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View view) {
+    		Intent i = new Intent(getApplicationContext(), CheckInActivity.class);
+    		
+    		i.putExtra("long", lastKnownLoc.getLongitude() + "");
+    		i.putExtra("lat", lastKnownLoc.getLatitude() + "");
+    		startActivity(i);
+    		}});
 
 	}
 

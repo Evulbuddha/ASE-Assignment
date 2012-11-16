@@ -25,7 +25,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".MainActivity"> </activity>
+=======
+        <activity
+            android:name=".CheckInActivity">
+           
+        </activity>
+>>>>>>> Added location check in only
     </application>
+    
 
 </manifest>
