@@ -12,7 +12,7 @@
         android:layout_marginTop="142dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="password" >
+        android:hint="Password" >
 
         <requestFocus />
     </EditText>
@@ -26,7 +26,7 @@
         android:layout_marginBottom="62dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="email address" />
+        android:hint="Email Address" />
 
     <Button
         android:id="@+id/buttonRegister"

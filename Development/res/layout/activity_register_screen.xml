@@ -3,50 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="142dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="password" >
-
-        
-    </EditText>
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText2"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_marginBottom="62dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="email address" />
     <requestFocus />
 
     <EditText
-        android:id="@+id/EditText01"
+        android:id="@+id/register_displayNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="14dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="149dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="display name" />
+        android:hint="Display Name" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/register_registerButton"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/EditText01"
+        android:layout_alignTop="@+id/register_displayNameText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="67dp"
         android:text="Register" />
+
+    <EditText
+        android:id="@+id/register_passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/register_displayNameText"
+        android:layout_alignLeft="@+id/register_displayNameText"
+        android:layout_marginBottom="35dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Password"/>
+
+    <EditText
+        android:id="@+id/register_emailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/register_passwordText"
+        android:layout_alignLeft="@+id/register_passwordText"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="textEmailAddress|textPersonName"
+        android:hint="Email Address" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

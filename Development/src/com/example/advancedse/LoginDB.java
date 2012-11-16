@@ -55,6 +55,21 @@ public class LoginDB {
 		}
 		return false;
 	}
+	
+	public static boolean register(String email, String password, String displayName){
+		AmazonSimpleDB db = LoginDB.getDB();
+		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest("users", email));
+		List<Attribute> attributesList = ar.getAttributes();
+		if(attributesList.size() == 0){//user doesn't already exist
+			List<ReplaceableAttribute> attributes = new ArrayList<ReplaceableAttribute>();
+			attributes.add(new ReplaceableAttribute().withName("password").withValue(password));
+			attributes.add(new ReplaceableAttribute().withName("displayName").withValue(displayName));
+			
+			sdb.putAttributes(new PutAttributesRequest("users", email, attributes));
+			return true;
+		}
+		return false;
+	}
 }
 
 	

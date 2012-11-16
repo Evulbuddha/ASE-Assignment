@@ -39,12 +39,25 @@ public class LoginActivity extends Activity{
     	        }
     			if(authorised){
     				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+    				i.putExtra("email", email.getText().toString());
     				startActivity(i);
     				finish();
     			}else{
     				password.setText("");
     			}
     		}});
+        
+        super.findViewById(R.id.buttonRegister).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+				startActivity(i);
+				finish();
+				
+			}
+		});
+        
         
     }
 	

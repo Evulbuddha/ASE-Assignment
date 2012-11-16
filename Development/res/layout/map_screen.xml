@@ -7,6 +7,7 @@
         android:background="#000000"
         tools:context=".MainActivity" xmlns:android="http://schemas.android.com/apk/res/android">
  
+    <!--Sean Macbook android:apiKey="0ZBbB6Smfzyz0dAze96-pN2Tw_2tRqkLlN8cbvg" />  -->    
 	<!--Ewen Macbook android:apiKey="0BsI21jMOBGeUhd1cZB9iPoFkMXPeltEBCTaGlw" />  -->		    
 	<!--ChrisNetbook	android:apiKey="0SQGCeBDcQoB-Ci2gKegwylOSOEZ3ZClklGZDiQ" /> -->
 	<!--ChrisPC android:apiKey="0SQGCeBDcQoCJSsEEcltZ2by950tv8LEC8fLCJA" />  -->
@@ -28,7 +29,7 @@
 			    android:layout_above="@+id/backButton"
 			    android:layout_alignParentLeft="true"
 			    android:layout_below="@+id/digitalClock1"
-			    android:apiKey="0ZBbB6Smfzyz0dAze96-pN2Tw_2tRqkLlN8cbvg" >
+			    android:apiKey="0BsI21jMOBGeUhd1cZB9iPoFkMXPeltEBCTaGlw" >
 
 			</com.google.android.maps.MapView><Button
         android:id="@+id/backButton"

@@ -37,13 +37,17 @@ public class MainActivity extends MapActivity {
 	private MapView mapV;
 	private Map map;
 	
+	private String email;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_screen);
         vf = (ViewFlipper) findViewById(R.id.flipper);
     
-        
+        Intent i = getIntent();
+        email = i.getStringExtra("email");
+
         setupLocation();
         
         setupButtons();
@@ -90,10 +94,10 @@ public class MainActivity extends MapActivity {
                     // do stuff in a separate thread
                 	logGPSLocation.sendEmptyMessage(0);
                     try {
-						Thread.sleep(30000);
+						Thread.sleep(60000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
-					}    // sleep for 3 seconds
+					}    // sleep for 30 seconds
                 }
             }
         };
@@ -143,10 +147,7 @@ public class MainActivity extends MapActivity {
     private Handler logGPSLocation = new Handler () {
         public void handleMessage (Message msg) {
             if(lastKnownLoc != null){
-            	///LocationData.save(lastKnownLoc, "uuid");
             	new LogLocationTask().execute(lastKnownLoc);
-
-            	
             }
         }
     };
@@ -161,7 +162,7 @@ public class MainActivity extends MapActivity {
 
 		protected Void doInBackground(Location... locations) {
 
-			LocationData.save(locations[0], "uuid");
+			LocationData.save(locations[0], email);
 
 			return null;
 		}
