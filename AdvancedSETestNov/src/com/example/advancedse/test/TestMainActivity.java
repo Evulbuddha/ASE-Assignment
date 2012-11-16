@@ -30,25 +30,25 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
 	protected void setUp() throws Exception {
  		super.setUp();
  		activity = (MainActivity) getActivity();
- 		analogClock = (AnalogClock) activity.findViewById(com.example.advancedse.R.id.analogClock1);
+ 		//analogClock = (AnalogClock) activity.findViewById(com.example.advancedse.R.id.analogClock1);
  		digitalClock = (DigitalClock) activity.findViewById(com.example.advancedse.R.id.digitalClock1);
  		mapView = (MapView) activity.findViewById(com.example.advancedse.R.id.mapView);
- 		gotoMapButton = (Button) activity.findViewById(com.example.advancedse.R.id.goMapButton);
+ 		//gotoMapButton = (Button) activity.findViewById(com.example.advancedse.R.id.goMapButton);
  	}
 	
 	@SmallTest
 	public void testAreViewsCreated(){
 		assertNotNull("Activity is null", activity);
-		assertNotNull("Analog Clock is null", analogClock);
+		//assertNotNull("Analog Clock is null", analogClock);
 		assertNotNull("Digital Clock is null", digitalClock);
-		assertNotNull("gotoMapButton is null", gotoMapButton);
+		//assertNotNull("gotoMapButton is null", gotoMapButton);
 	}
 	
 	@SmallTest
 	public void testAreViewsOnScreen(){
-		ViewAsserts.assertOnScreen(analogClock.getRootView(), analogClock);
+		//ViewAsserts.assertOnScreen(analogClock.getRootView(), analogClock);
 		ViewAsserts.assertOnScreen(digitalClock.getRootView(), digitalClock);
-		ViewAsserts.assertOnScreen(gotoMapButton.getRootView(), gotoMapButton);
+		//ViewAsserts.assertOnScreen(gotoMapButton.getRootView(), gotoMapButton);
 	}
 	
 	

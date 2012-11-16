@@ -65,7 +65,7 @@ public class LocationData {
 		String timestampAsString =timestamp.toString();
 		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest(uuid, timestampAsString));
 		List<Attribute> attributesList = ar.getAttributes();
-		double longitude = 0; double latitude = 0; String provider = null;
+		double longitude = 200; double latitude = 100; String provider = null;
 		for(Attribute a :attributesList){
 			if(a.getName().equals("longitude")){
 				longitude = Float.parseFloat(a.getValue());
