@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 import android.location.Location;
 
@@ -42,7 +43,8 @@ public class LocationData {
 		return properties.getProperty(propName);
 	}
 	
-	public static void save(Location location, String uuid, Date currentTime){//String uuid, double lon, double lat, Date time){
+	public static void save(Location location, String email, Date currentTime){//String uuid, double lon, double lat, Date time){
+		String uuid =email.replaceAll("@","");
 		AmazonSimpleDB db = LocationData.getDB();
 		CreateDomainRequest cdr = new CreateDomainRequest(uuid);
 		db.createDomain(cdr);
@@ -60,7 +62,9 @@ public class LocationData {
 		save(location, uuid, new Date());
 	}
 	
-	public static Location load(String uuid, Date timestamp){
+	public static Location load(String email, Date timestamp){
+		String uuid = email.replaceAll("@","");
+		email = email.replaceAll(".", "");
 		AmazonSimpleDB db = LocationData.getDB();
 		String timestampAsString =timestamp.toString();
 		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest(uuid, timestampAsString));

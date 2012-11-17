@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class RegisterActivity extends Activity{
@@ -30,24 +31,32 @@ public class RegisterActivity extends Activity{
     			TextView email = (TextView)findViewById(R.id.register_emailText);
     			TextView password = (TextView) findViewById(R.id.register_passwordText);
     			TextView displayName = (TextView) findViewById(R.id.register_displayNameText);
-    			RegisterTask registerTask = new RegisterTask();
-    			registerTask.execute(email.getText().toString(), password.getText().toString(), displayName.getText().toString());
-    			synchronized(registerTask){
-	                try {
-	                	registerTask.wait();//wait for login operation to complete
-					} catch (InterruptedException e) {
-						
-					}
-    	        }
-    			if(registerComplete){
-	    			Intent i = new Intent(getApplicationContext(), MainActivity.class);
-	    			i.putExtra("email", email.getText().toString());
-					startActivity(i);
-					finish();
+    			if(email.getText().toString().matches("(\\w)*@(\\w)*\\.(\\w)*")){//check email address is valid
+    				if(password.getText().toString().length() > 0){
+		    			RegisterTask registerTask = new RegisterTask();
+		    			registerTask.execute(email.getText().toString(), password.getText().toString(), displayName.getText().toString());
+		    			synchronized(registerTask){
+			                try {
+			                	registerTask.wait();//wait for login operation to complete
+							} catch (InterruptedException e) {
+								
+							}
+		    	        }
+		    			if(registerComplete){
+			    			Intent i = new Intent(getApplicationContext(), MainActivity.class);
+			    			i.putExtra("email", email.getText().toString());
+							startActivity(i);
+							finish();
+		    			}else{
+		    				email.setText("");
+		    				password.setText("");
+		    				
+		    			}
+    				}else{
+    					Toast.makeText(getBaseContext(), "Please Enter a Password", Toast.LENGTH_SHORT).show();
+    				}
     			}else{
-    				email.setText("");
-    				password.setText("");
-    				
+    				Toast.makeText(getBaseContext(), "Invalid Email Address", Toast.LENGTH_SHORT).show();
     			}
     		}});
         

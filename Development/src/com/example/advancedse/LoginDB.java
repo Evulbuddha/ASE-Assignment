@@ -17,6 +17,8 @@ import com.amazonaws.services.simpledb.model.GetAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesResult;
 import com.amazonaws.services.simpledb.model.PutAttributesRequest;
 import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
+import com.example.advancedse.exceptions.IncorrectPasswordException;
+import com.example.advancedse.exceptions.InvalidEmailException;
 
 public class LoginDB {
 	
@@ -42,14 +44,19 @@ public class LoginDB {
 		return properties.getProperty(propName);
 	}
 	
-	public static boolean login(String email, String password){
+	public static boolean login(String email, String password) throws IncorrectPasswordException, InvalidEmailException{
 		AmazonSimpleDB db = LoginDB.getDB();
 		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest("users", email));
 		List<Attribute> attributesList = ar.getAttributes();
+		if(attributesList.size() == 0){
+			throw new InvalidEmailException();
+		}
 		for(Attribute a :attributesList){
 			if(a.getName().equals("password")){
 				if(a.getValue().equals(password)){ //if the stored password == the input password
 					return true;
+				}else{
+					throw new IncorrectPasswordException();
 				}
 			}
 		}

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.app.Dialog;
 //import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,36 +24,41 @@ import android.view.View;
 import android.widget.AnalogClock;
 import android.widget.Button;
 import android.widget.DigitalClock;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class MainActivity extends MapActivity {
 
 	public final static String EXTRA_MESSAGE = "com.example.advancedSE.MESSAGE";
 	private LocationManager locationManager;
-	//private TextView gpsText;
-	//private DigitalClock digitalClock;
-	//private AnalogClock analogClock;
-	private ViewFlipper vf;
 	private MapView mapV;
 	private Map map;
 	
 	private String email;
 	
+	//toast handlers can be called from within other threads
+	Handler toastHandler = new Handler();
+	Runnable loggedLocationToastRunnable = new Runnable() {public void run() {Toast.makeText(MainActivity.this, "Logged location to cloud", Toast.LENGTH_SHORT).show();}};
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_screen);
-        vf = (ViewFlipper) findViewById(R.id.flipper);
     
+        //get email address user logged in with
         Intent i = getIntent();
         email = i.getStringExtra("email");
-
+        
+        Toast.makeText(getApplicationContext(),
+                "Logged in as " + email, Toast.LENGTH_LONG).show();
+        
         setupLocation();
         
         setupButtons();
         mapV = (MapView) findViewById(R.id.mapView);
-
         map = new Map(mapV, this);
 		mapV.setBuiltInZoomControls(true);
 		mapV.setClickable(true);
@@ -66,25 +72,30 @@ public class MainActivity extends MapActivity {
 		Button backButton = (Button) findViewById(R.id.backButton);
 		backButton.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View view) {
-    		Intent i = new Intent(getApplicationContext(), CheckInActivity.class);
-    		
-    		i.putExtra("long", lastKnownLoc.getLongitude() + "");
-    		i.putExtra("lat", lastKnownLoc.getLatitude() + "");
-    		startActivity(i);
+    			if(lastKnownLoc != null){//check we actually have a location
+		    		Intent i = new Intent(getApplicationContext(), CheckInActivity.class);
+		    		
+		    		i.putExtra("long", lastKnownLoc.getLongitude() + "");
+		    		i.putExtra("lat", lastKnownLoc.getLatitude() + "");
+		    		startActivity(i);
+    			}
     		}});
 
 	}
 
 	private void setupLocation() {
     	locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        //final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         //gpsText = (TextView) findViewById(R.id.gpsLoc);
-        //if (!gpsEnabled) {
+        if (!gpsEnabled) {
             // Build an alert dialog here that requests that the user enable
             // the location services, then when the user clicks the "OK" button,
             // call enableLocationSettings()
+        	//Dialog dialog = new Dialog(this.getBaseContext());
+        	//dialog.setContentView(R.layout.enable_gps);
+        	//dialog.show();
         	//enableLocationSettings();
-        //}
+        }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, gpsUpdateListener);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, gpsUpdateListener);
         
@@ -151,19 +162,12 @@ public class MainActivity extends MapActivity {
             }
         }
     };
-
-	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	private class LogLocationTask extends AsyncTask<Location, Void, Void> {
 
 		protected Void doInBackground(Location... locations) {
-
 			LocationData.save(locations[0], email);
-
+			toastHandler.post(loggedLocationToastRunnable);
 			return null;
 		}
 
@@ -171,5 +175,11 @@ public class MainActivity extends MapActivity {
 
 			//MainActivity.this.finish();
 		}
+	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

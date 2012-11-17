@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <requestFocus />
-
     <EditText
         android:id="@+id/register_displayNameText"
         android:layout_width="wrap_content"
@@ -48,6 +46,7 @@
         android:hint="Email Address" >
 
         <requestFocus />
+        
     </EditText>
 
 </RelativeLayout>
