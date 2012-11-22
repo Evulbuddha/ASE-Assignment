@@ -31,7 +31,7 @@ public class RegisterActivity extends Activity{
     			TextView email = (TextView)findViewById(R.id.register_emailText);
     			TextView password = (TextView) findViewById(R.id.register_passwordText);
     			TextView displayName = (TextView) findViewById(R.id.register_displayNameText);
-    			if(email.getText().toString().matches("(\\w)*@(\\w)*\\.(\\w)*")){//check email address is valid
+    			if(email.getText().toString().matches("(\\w)*@(\\w)*(\\.(\\w)*)*")){//check email address is valid
     				if(password.getText().toString().length() > 0){
 		    			RegisterTask registerTask = new RegisterTask();
 		    			registerTask.execute(email.getText().toString(), password.getText().toString(), displayName.getText().toString());
