@@ -44,7 +44,8 @@ public class LocationData {
 	}
 	
 	public static void save(Location location, String email, Date currentTime){//String uuid, double lon, double lat, Date time){
-		String uuid =email.replaceAll("@","");
+		String uuid =email.replaceAll("@","-");
+		email = email.replaceAll(".", "_");
 		AmazonSimpleDB db = LocationData.getDB();
 		CreateDomainRequest cdr = new CreateDomainRequest(uuid);
 		db.createDomain(cdr);
@@ -63,8 +64,8 @@ public class LocationData {
 	}
 	
 	public static Location load(String email, Date timestamp){
-		String uuid = email.replaceAll("@","");
-		email = email.replaceAll(".", "");
+		String uuid = email.replaceAll("@","-");
+		email = email.replaceAll(".", "_");
 		AmazonSimpleDB db = LocationData.getDB();
 		String timestampAsString =timestamp.toString();
 		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest(uuid, timestampAsString));

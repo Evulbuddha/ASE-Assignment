@@ -15,8 +15,13 @@ import com.amazonaws.services.simpledb.model.Attribute;
 import com.amazonaws.services.simpledb.model.CreateDomainRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesResult;
+import com.amazonaws.services.simpledb.model.Item;
 import com.amazonaws.services.simpledb.model.PutAttributesRequest;
 import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
+import com.amazonaws.services.simpledb.model.SelectRequest;
+import com.amazonaws.services.simpledb.model.SelectResult;
+import com.example.advancedse.exceptions.IncorrectPasswordException;
+import com.example.advancedse.exceptions.InvalidEmailException;
 
 public class KnownLocations {
 	
@@ -47,19 +52,37 @@ public class KnownLocations {
 	public static void newLocation(String name, String lon, String lat){//String uuid, double lon, double lat, Date time){
 		AmazonSimpleDB db = KnownLocations.getDB();
 		CreateDomainRequest cdr = new CreateDomainRequest("KnownLocations");
+		int id = getHighestKnownLocationID(db);
+		id++;
+		String idString = String.format("%05d", id);//pads it with 5 0s
 		db.createDomain(cdr);
 		List<ReplaceableAttribute> attributes = new ArrayList<ReplaceableAttribute>();
 		attributes.add(new ReplaceableAttribute().withName("Location Name").withValue(name));
+		attributes.add(new ReplaceableAttribute().withName("id").withValue(idString));
 		attributes.add(new ReplaceableAttribute().withName("longitude").withValue(lon));
 		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(lat));
 		
-		sdb.putAttributes(new PutAttributesRequest("KnownLocations", "1", attributes));
+		sdb.putAttributes(new PutAttributesRequest("KnownLocations", id+"", attributes));
 	}
 	
 	//public static void save(Location location, String name){
 	//	newLocation(location, name);
 	//}
 	
+	private static int getHighestKnownLocationID(AmazonSimpleDB sdbClient) {
+		sdbClient.setEndpoint("sdb.amazonaws.com");
+		String nextToken = null;
+		SelectRequest selectRequest = new SelectRequest( "SELECT id FROM KnownLocations WHERE id is not null ORDER BY id DESC LIMIT 1" ).withConsistentRead( true );
+		selectRequest.setNextToken( nextToken );        
+		SelectResult response = sdbClient.select( selectRequest );
+		try{
+			nextToken = response.getItems().get(0).getName();//should only be one entry
+			return Integer.parseInt(nextToken);
+		}catch(IndexOutOfBoundsException iobEX){
+			return -1;
+		}
+	}
+
 	public static Location load(String uuid, Date timestamp){
 		AmazonSimpleDB db = KnownLocations.getDB();
 		String timestampAsString =timestamp.toString();

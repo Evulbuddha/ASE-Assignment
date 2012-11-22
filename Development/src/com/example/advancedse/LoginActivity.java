@@ -32,6 +32,7 @@ public class LoginActivity extends Activity{
 	Handler toastHandler = new Handler();
 	Runnable invaildEmailToastRunnable = new Runnable() {public void run() {Toast.makeText(LoginActivity.this, "Email Address is Invaild. Make sure you have registerd.", Toast.LENGTH_SHORT).show();}};
 	Runnable invaildPasswordToastRunnable = new Runnable() {public void run() {Toast.makeText(LoginActivity.this, "Incorrect Password. Please try again.", Toast.LENGTH_SHORT).show();}};
+	Runnable loggingInToastRunnable = new Runnable() {public void run() {Toast.makeText(LoginActivity.this, "Logging in...", Toast.LENGTH_LONG).show();}};
 	
 	
 	@Override
@@ -48,6 +49,8 @@ public class LoginActivity extends Activity{
     			CheckBox rememberMe = (CheckBox) findViewById(R.id.checkBoxRememberMe);
     			
     			if(email.getText().toString().length()>0){
+    				LogingInMessageTask loginmessageTask = new LogingInMessageTask();
+    				loginmessageTask.execute("");
     				if(rememberMe.isChecked()){
     					saveLoginDetails(email.getText().toString(), password.getText().toString());
     				}else{
@@ -116,7 +119,7 @@ public class LoginActivity extends Activity{
 		((TextView)findViewById(R.id.emailView)).setText(username);
 		((TextView)findViewById(R.id.passwordView)).setText(password);
 		if(username.length()>0){
-			((CheckBox)findViewById(R.id.checkBoxRememberMe)).setPressed(true);
+			((CheckBox)findViewById(R.id.checkBoxRememberMe)).setChecked(true);
 		}
 	}
 
@@ -130,7 +133,6 @@ public class LoginActivity extends Activity{
 
 		@Override
 		protected Void doInBackground(String... params){
-			
 			try {
 				authorised = LoginDB.login(params[0], params[1]);
 			} catch (IncorrectPasswordException e) {
@@ -141,6 +143,23 @@ public class LoginActivity extends Activity{
 			synchronized(this){
 				notifyAll();
 			}
+			return null;
+		}
+
+		
+	}
+	
+private class LogingInMessageTask extends AsyncTask<String, Void, Void> {
+		
+		
+		protected void onPostExecute(Void result) {
+
+			//MainActivity.this.finish();
+		}
+
+		@Override
+		protected Void doInBackground(String... params){
+			toastHandler.post(loggingInToastRunnable);
 			return null;
 		}
 
