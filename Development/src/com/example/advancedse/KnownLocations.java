@@ -3,6 +3,7 @@ package com.example.advancedse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -82,26 +83,38 @@ public class KnownLocations {
 			return -1;
 		}
 	}
-
-	public static Location load(String uuid, Date timestamp){
-		AmazonSimpleDB db = KnownLocations.getDB();
-		String timestampAsString =timestamp.toString();
-		GetAttributesResult ar = db.getAttributes(new GetAttributesRequest(uuid, timestampAsString));
-		List<Attribute> attributesList = ar.getAttributes();
-		double longitude = 0; double latitude = 0; String provider = null;
-		for(Attribute a :attributesList){
-			if(a.getName().equals("longitude")){
-				longitude = Float.parseFloat(a.getValue());
-			}else if(a.getName().equals("latitude")){
-				latitude = Float.parseFloat(a.getValue());
-			}else if(a.getName().equals("provider")){
-				provider = a.getValue();
+ 
+	public static ArrayList<Place> loadAll(){
+		AmazonSimpleDB sdbClient = KnownLocations.getDB();
+		sdbClient.setEndpoint("sdb.amazonaws.com");
+		String nextToken = null;
+		SelectRequest selectRequest = new SelectRequest( "SELECT * FROM KnownLocations" ).withConsistentRead( true );
+		selectRequest.setNextToken( nextToken );        
+		SelectResult response = sdbClient.select( selectRequest );
+		ArrayList<Place> places = new ArrayList<Place>();
+		List<Item> locations = response.getItems();
+		if(locations.size() > 0){ //some locations exist in the database
+			for(Item i : locations){
+				String name = null;
+				double longitude = 0, latitude = 0;
+				List<Attribute> attributes = i.getAttributes();
+				Iterator<Attribute> attIter = attributes.iterator();
+				while(attIter.hasNext()){
+					Attribute att = attIter.next();
+					if(att.getName().equals("Location Name")){
+						name = att.getValue();
+					}else if(att.getName().equals("longitude")){
+						longitude = Double.parseDouble(att.getValue());
+					}else if(att.getName().equals("latitude")){
+						latitude = Double.parseDouble(att.getValue());
+					}
+				}
+				if(name != null && longitude != 0 && latitude != 0){
+					places.add(new Place(name, longitude, latitude));
+				}
 			}
 		}
-		Location loc = new Location(provider);
-		loc.setLongitude(longitude);
-		loc.setLatitude(latitude);
-		return loc;
+		return places;
 	}
 }
 
