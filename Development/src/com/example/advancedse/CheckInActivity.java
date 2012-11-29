@@ -35,6 +35,7 @@ public class CheckInActivity extends Activity {
 	private LocationManager locationManager;
 	private String lon;
 	private String lat;
+	private String email;
 	//private TextView gpsText;
 	
     @Override
@@ -46,6 +47,7 @@ public class CheckInActivity extends Activity {
         Intent i = getIntent();
         lon = i.getStringExtra("long");
         lat = i.getStringExtra("lat");
+        email = i.getStringExtra("email");
         Location currentLocation = new Location(LocationManager.GPS_PROVIDER);
         currentLocation.setLatitude(Double.parseDouble(lat));
         currentLocation.setLongitude(Double.parseDouble(lon));
@@ -60,11 +62,13 @@ public class CheckInActivity extends Activity {
 			Location placeLoc = new Location(LocationManager.GPS_PROVIDER);
 			placeLoc.setLatitude(p.getLatidude());
 			placeLoc.setLongitude(p.getLongitude());
+			final int id = p.getId();
 			if(placeLoc.distanceTo(location) < 200){
 				Button loc = new Button(this.getBaseContext());
 				loc.setOnClickListener(new View.OnClickListener() {
 		    		public void onClick(View view) {
 		    			//login to location
+		    			CheckInData.save(id, Util.encodeEmail(email));
 		    		}});
 				loc.setText(p.getName());
 				sv.addView(loc);

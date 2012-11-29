@@ -4,11 +4,13 @@ public class Place {
 
 	String name;
 	double longitude, latidude;
+	int id;
 	
-	public Place(String name, double longitude, double latitude){
+	public Place(int id, String name, double longitude, double latitude){
 		this.name = name;
 		this.longitude = longitude;
 		this.latidude = latitude;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -33,6 +35,14 @@ public class Place {
 
 	public void setLatidude(double latidude) {
 		this.latidude = latidude;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
 	}
 	
 	

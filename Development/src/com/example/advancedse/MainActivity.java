@@ -64,7 +64,6 @@ public class MainActivity extends MapActivity {
         KnownLocations.setMap(map);
 		mapV.setBuiltInZoomControls(true);
 		mapV.setClickable(true);
-       
     }
     
     private void setupButtons() {
@@ -79,6 +78,7 @@ public class MainActivity extends MapActivity {
 		    		
 		    		i.putExtra("long", lastKnownLoc.getLongitude() + "");
 		    		i.putExtra("lat", lastKnownLoc.getLatitude() + "");
+		    		i.putExtra("email", email);
 		    		startActivity(i);
     			}
     		}});

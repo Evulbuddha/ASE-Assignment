@@ -70,7 +70,7 @@ public class KnownLocations {
 		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(lat+""));
 		
 		sdb.putAttributes(new PutAttributesRequest("KnownLocations", id+"", attributes));
-		map.addPlace(new Place(name, lon, lat));
+		map.addPlace(new Place(id, name, lon, lat));
 	}
 	
 	//public static void save(Location location, String name){
@@ -104,6 +104,7 @@ public class KnownLocations {
 			for(Item i : locations){
 				String name = null;
 				double longitude = 0, latitude = 0;
+				int id = Integer.parseInt(i.getName());
 				List<Attribute> attributes = i.getAttributes();
 				Iterator<Attribute> attIter = attributes.iterator();
 				while(attIter.hasNext()){
@@ -117,7 +118,7 @@ public class KnownLocations {
 					}
 				}
 				if(name != null && longitude != 0 && latitude != 0){
-					places.add(new Place(name, longitude, latitude));
+					places.add(new Place(id, name, longitude, latitude));
 				}
 			}
 		}
