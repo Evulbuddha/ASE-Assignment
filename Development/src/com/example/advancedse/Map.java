@@ -5,8 +5,10 @@ import java.util.List;
 
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.AsyncTask;
 //import android.view.View;
 
+//import com.example.advancedse.MainActivity.LogLocationTask;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -20,6 +22,8 @@ public class Map {
 	private MapController mapController;
 	//private View zoomControlls;
 	
+	private ArrayList<Place> places;
+	
 	public Map(MapView mapView, MainActivity activity){
 		this.mapController = mapView.getController();
 		mapOverlays = mapView.getOverlays();
@@ -27,7 +31,16 @@ public class Map {
 		Drawable placeIcon = activity.getResources().getDrawable(R.drawable.place_mark);
 		itemizedoverlay = new LoggedLocationOverlays(userLocIcon, activity);
 		placesOverlay = new LoggedLocationOverlays(placeIcon, activity);
-		ArrayList<Place> places = KnownLocations.loadAll();
+		
+		new LoadPlacesTask().execute();
+		synchronized(this){
+			try {
+				this.wait(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		for(Place p:places){
 			addPlace(p);
 		}
@@ -47,5 +60,22 @@ public class Map {
 		placesOverlay.addOverlay(overlayitem);
 		mapOverlays.add(placesOverlay);
 		//mapController.setCenter(point);
+	}
+	
+	private class LoadPlacesTask extends AsyncTask<Void, Void, Void> {
+
+		protected void onPostExecute(Void result) {
+
+			//MainActivity.this.finish();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			places = KnownLocations.loadAll();
+			synchronized(this){
+				this.notifyAll();
+			}
+			return null;
+		}
 	}
 }

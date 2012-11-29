@@ -62,6 +62,10 @@ public class CheckInActivity extends Activity {
 			placeLoc.setLongitude(p.getLongitude());
 			if(placeLoc.distanceTo(location) < 200){
 				Button loc = new Button(this.getBaseContext());
+				loc.setOnClickListener(new View.OnClickListener() {
+		    		public void onClick(View view) {
+		    			//login to location
+		    		}});
 				loc.setText(p.getName());
 				sv.addView(loc);
 			}
