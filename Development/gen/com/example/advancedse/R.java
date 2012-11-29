@@ -18,16 +18,18 @@ public final class R {
         public static final int place_mark=0x7f020004;
     }
     public static final class id {
-        public static final int backButton=0x7f070011;
-        public static final int button1=0x7f07000e;
+        public static final int backButton=0x7f070012;
+        public static final int button1=0x7f07000f;
         public static final int buttonLogin=0x7f070003;
         public static final int buttonRegister=0x7f070002;
         public static final int checkBoxRememberMe=0x7f070004;
-        public static final int digitalClock1=0x7f07000f;
+        public static final int closeLocations=0x7f07000d;
+        public static final int closeLocationsLayout=0x7f07000e;
+        public static final int digitalClock1=0x7f070010;
         public static final int emailView=0x7f070001;
         public static final int flipper=0x7f070005;
-        public static final int mapView=0x7f070010;
-        public static final int menu_settings=0x7f070019;
+        public static final int mapView=0x7f070011;
+        public static final int menu_settings=0x7f07001a;
         public static final int newLocationButton=0x7f07000b;
         public static final int newLocationText=0x7f07000c;
         public static final int passwordView=0x7f070000;
@@ -35,15 +37,14 @@ public final class R {
         public static final int register_emailText=0x7f07000a;
         public static final int register_passwordText=0x7f070009;
         public static final int register_registerButton=0x7f070008;
-        public static final int scrollView1=0x7f07000d;
         public static final int second=0x7f070006;
-        public static final int tab1=0x7f070013;
-        public static final int tab2=0x7f070015;
-        public static final int tab3=0x7f070017;
-        public static final int tabHost=0x7f070012;
-        public static final int txt1=0x7f070014;
-        public static final int txt2=0x7f070016;
-        public static final int txt3=0x7f070018;
+        public static final int tab1=0x7f070014;
+        public static final int tab2=0x7f070016;
+        public static final int tab3=0x7f070018;
+        public static final int tabHost=0x7f070013;
+        public static final int txt1=0x7f070015;
+        public static final int txt2=0x7f070017;
+        public static final int txt3=0x7f070019;
     }
     public static final class layout {
         public static final int activity_login_screen=0x7f030000;

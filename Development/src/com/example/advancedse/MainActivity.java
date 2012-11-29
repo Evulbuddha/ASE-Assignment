@@ -46,6 +46,7 @@ public class MainActivity extends MapActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.map_screen);
     
         //get email address user logged in with
@@ -60,6 +61,7 @@ public class MainActivity extends MapActivity {
         setupButtons();
         mapV = (MapView) findViewById(R.id.mapView);
         map = new Map(mapV, this);
+        KnownLocations.setMap(map);
 		mapV.setBuiltInZoomControls(true);
 		mapV.setClickable(true);
        

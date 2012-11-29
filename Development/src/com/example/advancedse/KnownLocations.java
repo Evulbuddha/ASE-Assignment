@@ -30,6 +30,8 @@ public class KnownLocations {
 	private static Properties properties;
 	private static AmazonSimpleDB sdb;
 	
+	private static Map map;
+	
 	
 	
 	private static AmazonSimpleDB getDB(){
@@ -38,6 +40,10 @@ public class KnownLocations {
 			sdb = new AmazonSimpleDBClient(creds);
 		}
 		return sdb;
+	}
+	
+	public static void setMap(Map m){
+		map = m;
 	}
 
 	private static String getProperty(String propName) {
@@ -50,7 +56,7 @@ public class KnownLocations {
 		return properties.getProperty(propName);
 	}
 	
-	public static void newLocation(String name, String lon, String lat){//String uuid, double lon, double lat, Date time){
+	public static void newLocation(String name, double lon, double lat){//String uuid, double lon, double lat, Date time){
 		AmazonSimpleDB db = KnownLocations.getDB();
 		CreateDomainRequest cdr = new CreateDomainRequest("KnownLocations");
 		int id = getHighestKnownLocationID(db);
@@ -60,10 +66,11 @@ public class KnownLocations {
 		List<ReplaceableAttribute> attributes = new ArrayList<ReplaceableAttribute>();
 		attributes.add(new ReplaceableAttribute().withName("Location Name").withValue(name));
 		attributes.add(new ReplaceableAttribute().withName("id").withValue(idString));
-		attributes.add(new ReplaceableAttribute().withName("longitude").withValue(lon));
-		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(lat));
+		attributes.add(new ReplaceableAttribute().withName("longitude").withValue(lon+""));
+		attributes.add(new ReplaceableAttribute().withName("latitude").withValue(lat+""));
 		
 		sdb.putAttributes(new PutAttributesRequest("KnownLocations", id+"", attributes));
+		map.addPlace(new Place(name, lon, lat));
 	}
 	
 	//public static void save(Location location, String name){

@@ -18,11 +18,14 @@ import android.provider.Settings;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AnalogClock;
 import android.widget.Button;
 import android.widget.DigitalClock;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -43,10 +46,29 @@ public class CheckInActivity extends Activity {
         Intent i = getIntent();
         lon = i.getStringExtra("long");
         lat = i.getStringExtra("lat");
+        Location currentLocation = new Location(LocationManager.GPS_PROVIDER);
+        currentLocation.setLatitude(Double.parseDouble(lat));
+        currentLocation.setLongitude(Double.parseDouble(lon));
+        loadClosestLocations(currentLocation);
+        
        
     }
     
-    private void setupButtons() {
+    private void loadClosestLocations(Location location) {
+		TableLayout sv = (TableLayout) findViewById(R.id.closeLocationsLayout);
+		for(Place p:KnownLocations.loadAll()){
+			Location placeLoc = new Location(LocationManager.GPS_PROVIDER);
+			placeLoc.setLatitude(p.getLatidude());
+			placeLoc.setLongitude(p.getLongitude());
+			if(placeLoc.distanceTo(location) < 200){
+				Button loc = new Button(this.getBaseContext());
+				loc.setText(p.getName());
+				sv.addView(loc);
+			}
+		}
+	}
+
+	private void setupButtons() {
 
 		
 		Button addNew = (Button) findViewById(R.id.newLocationButton);
@@ -66,8 +88,9 @@ public class CheckInActivity extends Activity {
 	private class LogKnownLocationTask extends AsyncTask< String, Void, Void> {
 
 		protected Void doInBackground(String... info) {
-
-			KnownLocations.newLocation(info[0], info[1], info[2]);
+			double lon = Double.parseDouble(info[1]);
+			double lat = Double.parseDouble(info[2]);
+			KnownLocations.newLocation(info[0], lon, lat);
 			return null;
 		}
 

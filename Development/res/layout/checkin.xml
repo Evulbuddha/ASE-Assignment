@@ -19,20 +19,24 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/newLocationButton"
         android:ems="10"
-        android:text="Enter New Location" />
+        android:hint="Enter New Location" />
 
     <ScrollView
-        android:id="@+id/scrollView1"
+        android:id="@+id/closeLocations"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/newLocationText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </LinearLayout>
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="1"
+        android:id="@+id/closeLocationsLayout"
+        >
+        <!-- everything you already have -->
+    </TableLayout>
     </ScrollView>
 
 </RelativeLayout>    

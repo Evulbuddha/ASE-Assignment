@@ -43,7 +43,7 @@ public class Map {
 	
 	public void addPlace(Place p){
 		GeoPoint point = new GeoPoint((int)(p.getLatidude() * 1E6),(int)(p.getLongitude() * 1E6));
-		OverlayItem overlayitem = new OverlayItem(point, "Hola, Mundo!", "I'm in Mexico City!");
+		OverlayItem overlayitem = new OverlayItem(point, p.getName(), "I'm in Mexico City!");
 		placesOverlay.addOverlay(overlayitem);
 		mapOverlays.add(placesOverlay);
 		//mapController.setCenter(point);
