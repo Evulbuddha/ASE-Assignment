@@ -1,5 +1,75 @@
 <class-diagram version="1.0.11" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" 
+    name="com.example.advancedse.exceptions.IncorrectPasswordException" project="LoginActivity" 
+    file="/LoginActivity/src/com/example/advancedse/exceptions/IncorrectPasswordException.java" binary="false">    
+    <position height="-1" width="-1" x="93" y="72"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="com.example.advancedse.exceptions.InvalidEmailException" 
+    project="LoginActivity" file="/LoginActivity/src/com/example/advancedse/exceptions/InvalidEmailException.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="92" y="188"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="java.lang.Exception" project="LoginActivity" 
+    file="C:/Program Files/Android/android-sdk/platforms/android-8/android.jar" binary="true">    
+    <position height="-1" width="-1" x="295" y="141"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="java.lang.Throwable" project="LoginActivity" 
+    file="C:/Program Files/Android/android-sdk/platforms/android-8/android.jar" binary="true">    
+    <position height="-1" width="-1" x="518" y="203"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" corner="BOTTOM_RIGHT" language="java" name="java.io.Serializable" project="LoginActivity" 
+    file="C:/Program Files/Android/android-sdk/platforms/android-8/android.jar" binary="true">    
+    <position height="-1" width="-1" x="737" y="336"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="java.lang.Object" project="LoginActivity" 
+    file="C:/Program Files/Android/android-sdk/platforms/android-8/android.jar" binary="true">    
+    <position height="-1" width="-1" x="735" y="137"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <realization id="7">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <generalization id="8">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="9">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="10">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="11">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
