@@ -51,7 +51,7 @@
   </class>  
   <class id="7" corner="BOTTOM_RIGHT" language="java" name="com.example.advancedse.LoggedLocationOverlays" 
     project="LoginActivity" file="/LoginActivity/src/com/example/advancedse/LoggedLocationOverlays.java" binary="false">    
-    <position height="-1" width="-1" x="156" y="375"/>    
+    <position height="-1" width="-1" x="143" y="352"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -59,7 +59,7 @@
   </class>  
   <class id="8" corner="BOTTOM_RIGHT" language="java" name="com.example.advancedse.Map" project="LoginActivity" 
     file="/LoginActivity/src/com/example/advancedse/Map.java" binary="false">    
-    <position height="-1" width="-1" x="400" y="631"/>    
+    <position height="-1" width="-1" x="389" y="632"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -115,7 +115,7 @@
   </class>  
   <class id="15" corner="BOTTOM_RIGHT" language="java" name="com.example.advancedse.Map.LoadPlacesTask" 
     project="LoginActivity" file="/LoginActivity/src/com/example/advancedse/Map.java" binary="false">    
-    <position height="-1" width="-1" x="162" y="657"/>    
+    <position height="-1" width="-1" x="100" y="639"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
