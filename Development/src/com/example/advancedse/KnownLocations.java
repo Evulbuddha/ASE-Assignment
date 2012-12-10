@@ -56,7 +56,7 @@ public class KnownLocations {
 		return properties.getProperty(propName);
 	}
 	
-	public static void newLocation(String name, double lon, double lat){//String uuid, double lon, double lat, Date time){
+	public static int newLocation(String name, double lon, double lat){//String uuid, double lon, double lat, Date time){
 		AmazonSimpleDB db = KnownLocations.getDB();
 		CreateDomainRequest cdr = new CreateDomainRequest("KnownLocations");
 		int id = getHighestKnownLocationID(db);
@@ -71,6 +71,7 @@ public class KnownLocations {
 		
 		sdb.putAttributes(new PutAttributesRequest("KnownLocations", id+"", attributes));
 		map.addPlace(new Place(id, name, lon, lat));
+		return id;
 	}
 	
 	//public static void save(Location location, String name){

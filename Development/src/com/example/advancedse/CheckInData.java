@@ -71,7 +71,7 @@ public class CheckInData {
 		AmazonSimpleDB sdbClient = CheckInData.getDB();
 		sdbClient.setEndpoint("sdb.amazonaws.com");
 		String nextToken = null;
-		SelectRequest selectRequest = new SelectRequest( "SELECT * FROM CheckIn WHERE locationId="+locationId ).withConsistentRead( true );
+		SelectRequest selectRequest = new SelectRequest( "SELECT * FROM CheckIn WHERE locationId='"+locationId+"'" ).withConsistentRead( true );
 		selectRequest.setNextToken( nextToken );        
 		SelectResult response = sdbClient.select( selectRequest );
 		ArrayList<User> checkIn = new ArrayList<User>();

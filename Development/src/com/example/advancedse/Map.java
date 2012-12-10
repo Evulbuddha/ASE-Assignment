@@ -18,7 +18,8 @@ import com.google.android.maps.OverlayItem;
 public class Map {
 
 	private List<Overlay> mapOverlays;
-	private LoggedLocationOverlays itemizedoverlay, placesOverlay;
+	private LoggedLocationOverlays placesOverlay;
+	private UserLocationOverlay itemizedoverlay;
 	private MapController mapController;
 	//private View zoomControlls;
 	
@@ -29,7 +30,7 @@ public class Map {
 		mapOverlays = mapView.getOverlays();
 		Drawable userLocIcon = activity.getResources().getDrawable(R.drawable.location_mark);
 		Drawable placeIcon = activity.getResources().getDrawable(R.drawable.place_mark);
-		itemizedoverlay = new LoggedLocationOverlays(userLocIcon, activity);
+		itemizedoverlay = new UserLocationOverlay(userLocIcon, activity);
 		placesOverlay = new LoggedLocationOverlays(placeIcon, activity);
 		
 		new LoadPlacesTask().execute();
@@ -47,6 +48,7 @@ public class Map {
 	}
 	
 	public void addOverlay(Location l){
+		itemizedoverlay.clear();
 		GeoPoint point = new GeoPoint((int)(l.getLatitude() * 1E6),(int)(l.getLongitude() * 1E6));
 		OverlayItem overlayitem = new OverlayItem(point, "Hola, Mundo!", "I'm in Mexico City!");
 		itemizedoverlay.addOverlay(overlayitem);
@@ -56,7 +58,7 @@ public class Map {
 	
 	public void addPlace(Place p){
 		GeoPoint point = new GeoPoint((int)(p.getLatidude() * 1E6),(int)(p.getLongitude() * 1E6));
-		OverlayItem overlayitem = new OverlayItem(point, p.getName(), "I'm in Mexico City!");
+		PlaceOverlayItem overlayitem = new PlaceOverlayItem(point, p.getName(), "I'm in Mexico City!", p.getId());
 		placesOverlay.addOverlay(overlayitem);
 		mapOverlays.add(placesOverlay);
 		//mapController.setCenter(point);
